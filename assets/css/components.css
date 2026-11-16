@@ -445,6 +445,15 @@
   gap: var(--space-4);
 }
 
+/* Spacing Utilities */
+.mt-5 {
+  margin-top: var(--space-5);
+}
+
+.mt-6 {
+  margin-top: var(--space-6);
+}
+
 /* Inline SVG Diagrams & Stats */
 .diagram-box {
   width: 100%;

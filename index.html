@@ -169,7 +169,7 @@
           </article>
         </div>
 
-        <div class="table-wrap" style="margin-top: var(--space-6);">
+        <div class="table-wrap mt-6">
           <table class="data-table">
             <thead>
               <tr>
@@ -284,6 +284,261 @@
             </ul>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="architecture">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Proposed Methodology</span>
+          <h2>System Architecture &amp; Core Mechanisms</h2>
+          <p class="section__lead">
+            OpenGP separates GPU pipeline execution from erasure-coded checkpoint storage and keeps per-node VRAM bounded via query-aware KV cache streaming.
+          </p>
+        </header>
+
+        <figure class="figure">
+          <div class="diagram-box">
+            <svg class="diagram-svg" viewBox="0 0 820 340" role="img" aria-label="OpenGP System Overview connecting Users, Gateway Node, Active Compute Network, Kademlia DHT, and Passive Network">
+              <defs>
+                <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0 1L10 5L0 9Z" fill="#5ea0ff"></path>
+                </marker>
+              </defs>
+              <rect x="24" y="56" width="130" height="84" rx="10" fill="#0d1f66" stroke="#2a3b8f" stroke-width="1.5"></rect>
+              <text x="89" y="92" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Users</text>
+              <text x="89" y="114" text-anchor="middle" fill="#c9d3f5" font-size="12">Batch Requests</text>
+
+              <rect x="210" y="56" width="180" height="84" rx="10" fill="#0d1f66" stroke="#5ea0ff" stroke-width="1.5"></rect>
+              <text x="300" y="90" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Gateway Node</text>
+              <text x="300" y="112" text-anchor="middle" fill="#c9d3f5" font-size="11.5">Pipeline selection &amp; task registry</text>
+
+              <rect x="460" y="34" width="330" height="128" rx="12" fill="#07154f" stroke="#5ea0ff" stroke-width="2"></rect>
+              <text x="625" y="66" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Active Compute Network</text>
+              <text x="625" y="92" text-anchor="middle" fill="#c9d3f5" font-size="12">Pipeline-parallel forward inference</text>
+              <text x="625" y="114" text-anchor="middle" fill="#9eb0e6" font-size="12">Volunteer GPU peers (A1 → A2 → A3 → A4)</text>
+
+              <rect x="210" y="206" width="210" height="106" rx="10" fill="#07154f" stroke="#2a3b8f" stroke-width="1.5"></rect>
+              <text x="315" y="232" text-anchor="middle" fill="#5ea0ff" font-size="14" font-weight="700">Kademlia DHT</text>
+              <text x="315" y="256" text-anchor="middle" fill="#c9d3f5" font-size="11.5">NS1: Layer placement &amp; node liveness</text>
+              <text x="315" y="278" text-anchor="middle" fill="#c9d3f5" font-size="11.5">NS2: Shared shard index &amp; context store</text>
+
+              <rect x="460" y="206" width="330" height="106" rx="12" fill="#07154f" stroke="#4ade80" stroke-width="1.5"></rect>
+              <text x="625" y="234" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Passive Storage Network</text>
+              <text x="625" y="258" text-anchor="middle" fill="#c9d3f5" font-size="12">Erasure-coded terminal activation shards</text>
+              <text x="625" y="280" text-anchor="middle" fill="#9eb0e6" font-size="12">RAM / SSD volunteers (no GPU required)</text>
+
+              <line x1="154" y1="98" x2="206" y2="98" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-blue)"></line>
+              <line x1="390" y1="84" x2="456" y2="84" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-blue)"></line>
+              <line x1="460" y1="114" x2="394" y2="114" stroke="#5ea0ff" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-blue)"></line>
+              <text x="425" y="76" text-anchor="middle" fill="#9eb0e6" font-size="11">Job</text>
+              <text x="425" y="130" text-anchor="middle" fill="#9eb0e6" font-size="11">Response</text>
+
+              <path d="M510 162 L510 184 L380 184 L380 202" fill="none" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></path>
+              <text x="445" y="178" text-anchor="middle" fill="#9eb0e6" font-size="10.5">heartbeat / lookup</text>
+
+              <line x1="590" y1="162" x2="590" y2="202" stroke="#5ea0ff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-blue)"></line>
+              <line x1="680" y1="206" x2="680" y2="166" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></line>
+              <text x="580" y="188" text-anchor="end" fill="#9eb0e6" font-size="10.5">checkpoint</text>
+              <text x="690" y="188" text-anchor="start" fill="#9eb0e6" font-size="10.5">recovery</text>
+
+              <line x1="460" y1="258" x2="424" y2="258" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></line>
+              <text x="442" y="248" text-anchor="middle" fill="#9eb0e6" font-size="10">index</text>
+            </svg>
+          </div>
+          <figcaption class="figure__caption">
+            Figure 1 — OpenGP System Overview: Gateway Node dispatches batch jobs to Active GPU peers, backed by a GPU-free Passive Network and a two-namespace Kademlia DHT.
+          </figcaption>
+        </figure>
+
+        <div class="grid grid--2 mt-6">
+          <figure class="figure">
+            <div class="diagram-box">
+              <svg class="diagram-svg" viewBox="0 0 600 280" role="img" aria-label="Active/Passive Reed-Solomon (N, K) fault recovery flow">
+                <defs>
+                  <marker id="arrow-rs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M0 1L10 5L0 9Z" fill="#5ea0ff"></path>
+                  </marker>
+                </defs>
+                <text x="20" y="24" fill="#5ea0ff" font-size="12" font-weight="700">1. HOT PATH &amp; PRIMARY COPY</text>
+                <rect x="20" y="38" width="110" height="48" rx="8" fill="#0d1f66" stroke="#2a3b8f"></rect>
+                <text x="75" y="60" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">A1 (L0–L5)</text>
+                <text x="75" y="76" text-anchor="middle" fill="#9eb0e6" font-size="10">Active GPU</text>
+
+                <rect x="165" y="38" width="110" height="48" rx="8" fill="#0d1f66" stroke="#5ea0ff"></rect>
+                <text x="220" y="60" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">A2 (L6–L9)</text>
+                <text x="220" y="76" text-anchor="middle" fill="#9eb0e6" font-size="10">Checkpoint</text>
+
+                <rect x="310" y="38" width="110" height="48" rx="8" fill="#0d1f66" stroke="#f87171"></rect>
+                <text x="365" y="60" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">A3 (L10–L15)</text>
+                <text x="365" y="76" text-anchor="middle" fill="#f87171" font-size="10">Node Drops</text>
+
+                <rect x="455" y="38" width="115" height="48" rx="8" fill="#0d1f66" stroke="#2a3b8f"></rect>
+                <text x="512" y="60" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">A4 (L16–L18)</text>
+                <text x="512" y="76" text-anchor="middle" fill="#9eb0e6" font-size="10">Active GPU</text>
+
+                <line x1="130" y1="62" x2="161" y2="62" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-rs)"></line>
+                <line x1="275" y1="62" x2="306" y2="62" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-rs)"></line>
+                <line x1="420" y1="62" x2="451" y2="62" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-rs)"></line>
+
+                <text x="20" y="122" fill="#5ea0ff" font-size="12" font-weight="700">2. (N, K) REED-SOLOMON SWARM</text>
+                <rect x="165" y="134" width="150" height="44" rx="8" fill="#07154f" stroke="#4ade80"></rect>
+                <text x="240" y="154" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Passive Entry Node</text>
+                <text x="240" y="170" text-anchor="middle" fill="#9eb0e6" font-size="10">Splits into (N, K) shards</text>
+
+                <line x1="220" y1="86" x2="220" y2="130" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-rs)"></line>
+
+                <rect x="360" y="134" width="210" height="44" rx="8" fill="#07154f" stroke="#2a3b8f"></rect>
+                <text x="465" y="154" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">Kademlia DHT + Shards</text>
+                <text x="465" y="170" text-anchor="middle" fill="#9eb0e6" font-size="10">Any K of N shards reconstruct state</text>
+                <line x1="315" y1="156" x2="356" y2="156" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-rs)"></line>
+
+                <text x="20" y="212" fill="#5ea0ff" font-size="12" font-weight="700">3. RECOVERY ON REPLACEMENT GPU</text>
+                <rect x="275" y="224" width="180" height="44" rx="8" fill="#0d1f66" stroke="#4ade80" stroke-width="1.5"></rect>
+                <text x="365" y="244" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">B3 (L10–L15) Restored</text>
+                <text x="365" y="260" text-anchor="middle" fill="#c9d3f5" font-size="10">Single local prefill pass</text>
+                <line x1="430" y1="178" x2="390" y2="220" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-rs)"></line>
+              </svg>
+            </div>
+            <figcaption class="figure__caption">
+              Figure 2 — Active/Passive Architecture: periodic checkpoints avoid GPU upload saturation; (N, K) Reed-Solomon shards let a replacement GPU (B3) resume via one local prefill pass.
+            </figcaption>
+          </figure>
+
+          <figure class="figure">
+            <div class="diagram-box">
+              <svg class="diagram-svg" viewBox="0 0 600 280" role="img" aria-label="Query-Aware KV Cache Streaming from CPU RAM through GPU summary filter to GPU VRAM">
+                <defs>
+                  <marker id="arrow-kv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M0 1L10 5L0 9Z" fill="#5ea0ff"></path>
+                  </marker>
+                </defs>
+                <rect x="20" y="24" width="560" height="232" rx="12" fill="#07154f" stroke="#2a3b8f" stroke-dasharray="6 4"></rect>
+                <text x="40" y="52" fill="#5ea0ff" font-size="12" font-weight="700">ACTIVE VOLUNTEER NODE (BOUNDED VRAM)</text>
+
+                <rect x="36" y="76" width="155" height="146" rx="10" fill="#0d1f66" stroke="#2a3b8f"></rect>
+                <text x="113" y="106" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">CPU RAM</text>
+                <text x="113" y="134" text-anchor="middle" fill="#c9d3f5" font-size="11.5">Full KV cache stored</text>
+                <text x="113" y="154" text-anchor="middle" fill="#c9d3f5" font-size="11.5">in host memory</text>
+                <text x="113" y="182" text-anchor="middle" fill="#9eb0e6" font-size="11">Prevents GPU OOM</text>
+
+                <rect x="225" y="76" width="155" height="146" rx="10" fill="#0d1f66" stroke="#5ea0ff"></rect>
+                <text x="302" y="106" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">Smart Filtering</text>
+                <text x="302" y="132" text-anchor="middle" fill="#5ea0ff" font-size="11.5" font-weight="600">Fast GPU Check</text>
+                <text x="302" y="156" text-anchor="middle" fill="#c9d3f5" font-size="11">Inspects summary table</text>
+                <text x="302" y="174" text-anchor="middle" fill="#c9d3f5" font-size="11">for current input token</text>
+
+                <rect x="414" y="76" width="150" height="146" rx="10" fill="#0d1f66" stroke="#4ade80"></rect>
+                <text x="489" y="106" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">GPU VRAM</text>
+                <text x="489" y="138" text-anchor="middle" fill="#4ade80" font-size="18" font-weight="700">Top 5–10%</text>
+                <text x="489" y="164" text-anchor="middle" fill="#c9d3f5" font-size="11.5">Only relevant KV</text>
+                <text x="489" y="182" text-anchor="middle" fill="#c9d3f5" font-size="11.5">entries streamed in</text>
+
+                <line x1="191" y1="149" x2="221" y2="149" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-kv)"></line>
+                <line x1="380" y1="149" x2="410" y2="149" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-kv)"></line>
+              </svg>
+            </div>
+            <figcaption class="figure__caption">
+              Figure 3 — Query-Aware KV Cache Streaming: keeps the full context in CPU RAM and streams only the top 5–10% relevant KV cache entries into GPU VRAM per token.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="experiment">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Preliminary Experiment</span>
+          <h2>Measuring Network Hop Latency Across Consumer GPUs</h2>
+          <p class="section__lead">
+            A 2-node University TCP testbed evaluated how multi-hop pipeline parallelism affects interactive latency and decode throughput on consumer hardware.
+          </p>
+        </header>
+
+        <div class="stat-row">
+          <div class="stat-card">
+            <p class="stat-card__value">2 Nodes</p>
+            <p class="stat-card__label">RTX 3060 (6 GB) + RTX 4070 Ti (16 GB) over TCP</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-card__value">Qwen2.5-7B</p>
+            <p class="stat-card__label">Instruct, 28 layers, full FP16, 100% GPU VRAM</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-card__value">1 – 9 Hops</p>
+            <p class="stat-card__label">Tested across Large Context, Medium &amp; Small Chat</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-card__value">&gt; 100 ms</p>
+            <p class="stat-card__label">Inter-token latency at ≥ 5 hops (infeasible for chat)</p>
+          </div>
+        </div>
+
+        <figure class="figure mt-6">
+          <div class="diagram-box">
+            <svg class="diagram-svg" viewBox="0 0 760 260" role="img" aria-label="Trend chart showing TTFT rising from ~2.9s to ~11.8s and Decode TPS dropping from ~20 tok/s to ~8-9 tok/s across 1 to 9 network hops">
+              <text x="190" y="24" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Average TTFT — Large Context (seconds)</text>
+              <line x1="50" y1="210" x2="340" y2="210" stroke="#2a3b8f" stroke-width="1.5"></line>
+              <line x1="50" y1="45" x2="50" y2="210" stroke="#2a3b8f" stroke-width="1.5"></line>
+              <rect x="70" y="172" width="32" height="38" rx="4" fill="#5ea0ff"></rect>
+              <text x="86" y="164" text-anchor="middle" fill="#c9d3f5" font-size="11">~2.9s</text>
+              <text x="86" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">1 hop</text>
+
+              <rect x="126" y="124" width="32" height="86" rx="4" fill="#5ea0ff"></rect>
+              <text x="142" y="116" text-anchor="middle" fill="#c9d3f5" font-size="11">~6.5s</text>
+              <text x="142" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">3 hops</text>
+
+              <rect x="182" y="108" width="32" height="102" rx="4" fill="#5ea0ff"></rect>
+              <text x="198" y="100" text-anchor="middle" fill="#c9d3f5" font-size="11">~7.7s</text>
+              <text x="198" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">5 hops</text>
+
+              <rect x="238" y="88" width="32" height="122" rx="4" fill="#5ea0ff"></rect>
+              <text x="254" y="80" text-anchor="middle" fill="#c9d3f5" font-size="11">~9.2s</text>
+              <text x="254" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">7 hops</text>
+
+              <rect x="294" y="55" width="32" height="155" rx="4" fill="#5ea0ff"></rect>
+              <text x="310" y="47" text-anchor="middle" fill="#c9d3f5" font-size="11">~11.8s</text>
+              <text x="310" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">9 hops</text>
+
+              <text x="570" y="24" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Average Decode Speed (tokens/s)</text>
+              <line x1="420" y1="210" x2="720" y2="210" stroke="#2a3b8f" stroke-width="1.5"></line>
+              <line x1="420" y1="45" x2="420" y2="210" stroke="#2a3b8f" stroke-width="1.5"></line>
+              <line x1="420" y1="142" x2="720" y2="142" stroke="#f87171" stroke-width="1" stroke-dasharray="4 4"></line>
+              <text x="720" y="136" text-anchor="end" fill="#f87171" font-size="10">10 tok/s (100 ms/tok)</text>
+
+              <rect x="440" y="74" width="32" height="136" rx="4" fill="#4ade80"></rect>
+              <text x="456" y="66" text-anchor="middle" fill="#c9d3f5" font-size="11">~20</text>
+              <text x="456" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">1 hop</text>
+
+              <rect x="496" y="102" width="32" height="108" rx="4" fill="#4ade80"></rect>
+              <text x="512" y="94" text-anchor="middle" fill="#c9d3f5" font-size="11">~15</text>
+              <text x="512" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">3 hops</text>
+
+              <rect x="552" y="136" width="32" height="74" rx="4" fill="#fbbf24"></rect>
+              <text x="568" y="128" text-anchor="middle" fill="#c9d3f5" font-size="11">~11</text>
+              <text x="568" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">5 hops</text>
+
+              <rect x="608" y="138" width="32" height="72" rx="4" fill="#fbbf24"></rect>
+              <text x="624" y="130" text-anchor="middle" fill="#c9d3f5" font-size="11">~10.5</text>
+              <text x="624" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">7 hops</text>
+
+              <rect x="664" y="150" width="32" height="60" rx="4" fill="#f87171"></rect>
+              <text x="680" y="142" text-anchor="middle" fill="#c9d3f5" font-size="11">~8.6</text>
+              <text x="680" y="228" text-anchor="middle" fill="#9eb0e6" font-size="11">9 hops</text>
+            </svg>
+          </div>
+          <figcaption class="figure__caption">
+            Figure 4 — Preliminary 2-node benchmark trends across 1–9 network hops (Large Context TTFT and mean Decode TPS across workloads).
+          </figcaption>
+        </figure>
+
+        <aside class="callout" aria-label="Experiment Key Finding">
+          <p class="callout__label">Key Finding</p>
+          <p class="callout__text">
+            Network hops compound sequential decoding latency: at ≥ 5 hops, inter-token latency exceeds 100 ms, rendering interactive chat infeasible and experimentally justifying OpenGP's focus on non-interactive batch inference.
+          </p>
+        </aside>
       </div>
     </section>
   </main>
