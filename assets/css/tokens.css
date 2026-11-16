@@ -1,0 +1,65 @@
+/* Design tokens — Option A (Slide-Match: Deep Navy + White + Blue Accent) */
+:root {
+  /* Palette */
+  --bg-base: #000b3b;
+  --bg-surface: #07154f;
+  --bg-surface-elevated: #0d1f66;
+  --bg-nav: rgba(0, 11, 59, 0.92);
+
+  --text-primary: #ffffff;
+  --text-secondary: #c9d3f5;
+  --text-muted: #9eb0e6;
+
+  --accent: #5ea0ff;
+  --accent-hover: #82b6ff;
+  --accent-ink: #000b3b;
+  --accent-soft: rgba(94, 160, 255, 0.14);
+
+  --border: #2a3b8f;
+  --border-subtle: rgba(94, 160, 255, 0.22);
+
+  --status-pass: #4ade80;
+  --status-partial: #fbbf24;
+  --status-fail: #f87171;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.12rem + 0.6vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);
+  --text-3xl: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6rem;
+
+  /* Layout */
+  --container-max: 72rem;
+  --nav-height: 4rem;
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 8px 24px rgba(0, 4, 24, 0.35);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 260ms;
+}
