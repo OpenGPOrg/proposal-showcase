@@ -4,20 +4,22 @@ Read `AGENTS.md` first. All rules there apply. Execute phases in order; each pha
 
 ## Design direction
 
-Default (matches the slides): **Deep navy `#000B3B`-ish background, white text, one bright accent**, clean geometric sans-serif (the slides use a DIN-like grotesque; self-host **Inter** or **Barlow** woff2). Style options are mocked in `design/style-options.html` — the user picks one (default = Option A). Record the choice in `docs/design-notes.md` and encode it only through tokens in `assets/css/tokens.css`.
+**Approved: Option A (slide-match)** — deep navy `#000B3B`-ish background, white text, one bright blue accent (~`#5EA0FF`), clean grotesque sans-serif (self-host **Inter** or **Barlow** woff2). Reference mock-up: `design/style-options.html` (local only). Record the choice in `docs/design-notes.md` and encode it only through tokens in `assets/css/tokens.css`. Optional subtle node-graph motif in the hero is allowed only if it stays within this palette.
+
+Team section: four member cards with **names only (no index numbers)** plus placeholder LinkedIn/GitHub links (see AGENTS §1); supervisor shown as Dr. Adeesha Wijayasiri.
 
 Structure: a single scrolling page with a sticky top nav, full-viewport hero, and sections that each feel like a "slide" (generous space, one idea each), plus a keyboard-friendly optional "slide mode" is **out of scope** unless time remains.
 
 ## Phases
 
 ### Phase 0 — Repo bootstrap (`chore/bootstrap`)
-- Copy the PDF to `source/`. Create `.gitignore` (`.DS_Store`, `node_modules/`, `reports/`, `*.log`), `.nojekyll`, README skeleton.
-- Commit `AGENTS.md` and `PLAN.md` first (see AGENTS §4.1).
+- `AGENTS.md`, `PLAN.md`, `.gitignore` are already committed; `source/` (PDF) and `design/` are git-ignored — verify with `git check-ignore`.
+- On `chore/bootstrap`: extend `.gitignore` (`.DS_Store`, `node_modules/`, `reports/`, `*.log`), add `.nojekyll`, README skeleton (no index numbers).
 
 ### Phase 1 — Content extraction (`docs/content-outline`)
 - Read **every** slide of the PDF (render pages to images, e.g. with Playwright/pdf.js or macOS Quick Look/`sips`; do not guess). The PDF has ~50 pages; text layer is font-encoded so use rendered images/OCR-by-vision.
 - Produce `docs/content-outline.md`: for each slide → title, key points, figures/diagrams, numbers, references. Then a proposed section map for the site.
-- Expected sections (adjust to the real deck): Hero/title+team · Problem & motivation · Background · Aim & objectives · Research gap / related work · Proposed solution & architecture · Methodology / work plan · Evaluation plan · Expected outcomes & timeline · Team & supervisor · References · (optional) download proposal PDF.
+- Expected sections (adjust to the real deck): Hero/title+team · Problem & motivation · Background · Aim & objectives · Research gap / related work · Proposed solution & architecture · Methodology / work plan · Evaluation plan · Expected outcomes & timeline · Team & supervisor · References (no PDF download — the slides are private).
 - Unknowns → `docs/open-questions.md`. Get user confirmation of the outline before Phase 3 if there are open questions.
 
 ### Phase 2 — Design system (`feat/design-system`)
@@ -35,7 +37,7 @@ Structure: a single scrolling page with a sticky top nav, full-viewport hero, an
 - Optimise images, preload the main font, remove unused CSS, check CLS/LCP.
 
 ### Phase 5 — Verification gate & independent review (`test/review`)
-Run everything in AGENTS §6 and write `docs/review-final.md`:
+Run everything in AGENTS §6 and write `reports/review-final.md` (ignored). Add two checks: `grep -rE "22[0-9]{4}[A-Z]"` over tracked files finds no index numbers, and `git ls-files` contains nothing from `source/` or `design/`.
 
 | Check | Tool | Pass criteria |
 |---|---|---|

@@ -7,7 +7,9 @@ Instructions for any AI agent working in this repo. Read this file fully, then r
 Static showcase website for our final-year project proposal, hosted on **GitHub Pages**.
 
 - **Project:** Peer-to-Peer Volunteer Computing System for Distributed LLM Inference
-- **Team:** OpenGP — Pratheep S. (220489C), Sirithar R. (220614H), Suriya G. (220628E), Vithurshan S. (220672G)
+- **Team:** OpenGP — Pratheep S., Sirithar R., Suriya G., Vithurshan S.
+  - **Never publish student index numbers** anywhere on the site, in meta tags, alt text, or docs that get committed. Names only.
+  - Each member card gets placeholder **LinkedIn** and **GitHub** links (`href="#"` is not allowed — use clearly marked placeholders such as `https://www.linkedin.com/in/TODO-pratheep` and `https://github.com/TODO-pratheep`, styled normally, `rel="noopener noreferrer"`, `target="_blank"`). List every placeholder in `docs/open-questions.md` as `TODO(content):` so the user can fill them in. Do not guess real profile URLs.
 - **Supervisor:** Dr. Adeesha Wijayasiri
 - **Source of truth for content:** `source/OpenGP_-_Prposal_Presentation-Presented.pdf` (the presented proposal slides). Do not invent facts, numbers, citations or claims. If something is missing or unclear, add a `TODO(content):` note in `docs/open-questions.md` and ask the user.
 
@@ -29,7 +31,8 @@ assets/css/           # tokens.css (design tokens), base.css, components.css
 assets/js/            # main.js (small, modular, no globals)
 assets/img/           # optimised images, SVG diagrams
 assets/fonts/         # self-hosted woff2
-source/               # original PDF (read-only reference)
+source/               # original PDF (read-only, git-ignored, private)
+design/               # style mock-ups (git-ignored, local only)
 docs/                 # open-questions.md, design-notes.md, review reports
 tests/                # smoke/visual/a11y scripts (optional dev tooling)
 PLAN.md  AGENTS.md  README.md  .gitignore  .nojekyll
@@ -37,14 +40,14 @@ PLAN.md  AGENTS.md  README.md  .gitignore  .nojekyll
 
 ## 4. Git workflow (mandatory)
 
-The repo is initialised on `main` with **no commits**. Rules:
+The repo already has one commit on `main` (`init repo`: `AGENTS.md`, `PLAN.md`, `.gitignore`). `source/` (the proposal PDF) and `design/` (style mock-ups) are git-ignored and **must never be committed or un-ignored**. Rules:
 
-1. First commit: only `AGENTS.md`, `PLAN.md`, `.gitignore`, `README.md` skeleton, `.nojekyll` — message `chore: initialise repository with agent instructions`.
+1. Do all further work on branches (see rule 2). Extend `.gitignore` in the first `chore/bootstrap` commit with `.DS_Store`, `node_modules/`, `reports/`, `*.log`; add `.nojekyll` and a README skeleton in separate commits.
 2. Never work directly on `main`. Create a branch per phase/feature: `feat/<topic>`, `fix/<topic>`, `docs/<topic>`, `chore/<topic>`. Merge into `main` with `git merge --no-ff` (or squash if user prefers) **only after the review gate in §6 passes**.
 3. **Small, atomic commits** — one logical change each; the site must work at every commit. Never mix formatting, refactors and features.
 4. **Conventional Commits**: `type(scope): imperative summary` (≤ 72 chars), with a body explaining *why* when non-trivial. Types: `feat fix docs style refactor perf test chore`.
 5. Before every commit: `git status`, `git diff --staged` — review what you are committing. Stage explicitly (`git add <paths>`); never `git add -A` blindly.
-6. Never commit: secrets, `.DS_Store`, `node_modules/`, screenshots/test output, large unoptimised files, or generated reports (put those in an ignored `reports/`).
+6. Never commit: secrets, `.DS_Store`, `node_modules/`, screenshots/test output, large unoptimised files, or generated reports (put those in an ignored `reports/`), `source/` or `design/` contents, or student index numbers.
 7. Never rewrite published history: no `push --force`, no `reset --hard` on shared work, no `--no-verify`. If you made a mistake, add a fixing commit (or `git revert`).
 8. Do not push or enable Pages until the user says so. When asked: push `main`, then Settings → Pages → Deploy from branch `main` / root (or tell the user to do it).
 9. Tag the reviewed release: `v1.0.0` (annotated).
@@ -61,7 +64,7 @@ The repo is initialised on `main` with **no commits**. Rules:
 
 ## 6. Verification & review (mandatory before each merge)
 
-You must **prove** the work, not claim it. Run the gate in `PLAN.md` §Verification and record results in `docs/review-<phase>.md` (commit it only if the user wants; otherwise keep in `reports/`).
+You must **prove** the work, not claim it. Run the gate in `PLAN.md` §Verification and record results in `reports/review-<phase>.md` (git-ignored; commit only if the user asks).
 
 Minimum gate:
 
@@ -77,6 +80,7 @@ A phase is "done" only when the gate passes and the tree is committed.
 ## 7. Working agreements
 
 - Ask the user before: adding a dependency, changing the visual direction, adding any external request, pushing, or deleting anything.
-- Don't touch `source/` contents. Don't commit the PDF if the user marks it private (ask first; default: commit it).
+- Don't touch `source/` contents. The PDF is private: never commit it, never copy it into `assets/`, and don't offer a PDF download link on the site. The final visual direction is **Option A (slide-match: deep navy, white text, one blue accent)**; a reference mock-up is in `design/style-options.html` (local only).
+- Because `docs/` is committed, don't paste verbatim slide text/images into it beyond short paraphrased outlines; keep the detailed slide-by-slide mapping in the ignored `reports/`.
 - Keep summaries concise: what changed, how it was verified (with evidence), what's open.
 - If blocked (tool missing, permission denied), report it and stop rather than working around it.
