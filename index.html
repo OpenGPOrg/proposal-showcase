@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenGP — Peer-to-Peer Volunteer Computing for Distributed LLM Inference</title>
+  <meta name="description" content="Final-year project proposal showcase by Team OpenGP: fault-tolerant, memory-bounded distributed LLM batch inference across volunteer consumer GPUs.">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="Primary navigation">
+      <a class="nav-brand" href="#hero">
+        <span class="nav-brand__dot" aria-hidden="true"></span>
+        <span>OpenGP</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        Menu
+      </button>
+      <ul class="nav-links" id="primary-nav">
+        <li><a class="is-active" href="#hero">Overview</a></li>
+        <li><a href="#components">Components</a></li>
+        <li><a href="#table-demo">Matrix</a></li>
+        <li><a href="#timeline-demo">Timeline</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section section--hero" id="hero">
+      <svg class="hero__motif" viewBox="0 0 320 240" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="50" cy="60" r="8" fill="currentColor"></circle>
+        <circle cx="160" cy="36" r="8" fill="currentColor"></circle>
+        <circle cx="260" cy="84" r="8" fill="currentColor"></circle>
+        <circle cx="110" cy="156" r="8" fill="currentColor"></circle>
+        <circle cx="220" cy="190" r="8" fill="currentColor"></circle>
+        <path d="M50 60L160 36L260 84L220 190L110 156Z"></path>
+        <path d="M160 36L110 156M260 84L110 156"></path>
+      </svg>
+      <div class="container hero__content">
+        <span class="section__eyebrow">Team OpenGP · Design System Skeleton</span>
+        <h1>Peer-to-Peer Volunteer Computing System for Distributed LLM Inference</h1>
+        <p class="section__lead">
+          Design system kitchen-sink skeleton verifying Option A tokens (deep navy, white typography, and bright blue accent) across all UI primitives.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="#components">Explore Components</a>
+          <a class="btn btn--ghost" href="#table-demo">View Matrix</a>
+        </div>
+        <ul class="chip-list" aria-label="Key pillars">
+          <li class="chip">Batch Inference</li>
+          <li class="chip">Reed-Solomon Fault Tolerance</li>
+          <li class="chip">KV Cache Streaming</li>
+          <li class="chip">Kademlia DHT</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="components">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Primitives</span>
+          <h2>Cards &amp; Callouts</h2>
+          <p class="section__lead">Responsive grid cards and highlighted problem-statement callout.</p>
+        </header>
+
+        <div class="grid grid--3">
+          <article class="card">
+            <p class="card__meta">01 · Compute</p>
+            <h3 class="card__title">Active Compute Network</h3>
+            <p>Volunteer GPUs execute sequential pipeline stages and stream activations to adjacent peers.</p>
+          </article>
+          <article class="card">
+            <p class="card__meta">02 · Resilience</p>
+            <h3 class="card__title">Passive Storage Swarm</h3>
+            <p>Non-GPU peers store Reed-Solomon erasure-coded activation shards indexed via Kademlia DHT.</p>
+          </article>
+          <article class="card">
+            <p class="card__meta">03 · Memory</p>
+            <h3 class="card__title">KV Cache Streaming</h3>
+            <p>Full KV cache resides in CPU RAM; fast GPU summary filtering streams only top 5–10% to VRAM.</p>
+          </article>
+        </div>
+
+        <aside class="callout" aria-label="Highlighted statement">
+          <p class="callout__label">Problem Statement</p>
+          <p class="callout__text">
+            How to enable organizations to run LLM inference across volunteers' personal devices without crashing from limited memory or losing progress when volunteers unexpectedly disconnect?
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="table-demo">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Comparison</span>
+          <h2>Data Table</h2>
+        </header>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">System</th>
+                <th scope="col">Consumer Support</th>
+                <th scope="col">Fault Tolerance</th>
+                <th scope="col">Low VRAM Pressure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Petals</td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-partial">Client-bound</span></td>
+                <td><span class="badge-fail">No</span></td>
+              </tr>
+              <tr class="is-highlighted">
+                <td><strong>OpenGP (Ours)</strong></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="timeline-demo">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Schedule</span>
+          <h2>Timeline &amp; Milestones</h2>
+        </header>
+        <ol class="timeline">
+          <li class="timeline__item">
+            <p class="timeline__date">Apr – Aug 2026</p>
+            <p class="timeline__title">Background, Literature Review &amp; Problem Formulation</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">10 Sep 2026</p>
+            <p class="timeline__title">Proposal Evaluation Milestone</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Team OpenGP · Supervisor: Dr. Adeesha Wijayasiri</p>
+      <p>Peer-to-Peer Volunteer Computing System for Distributed LLM Inference</p>
+    </div>
+  </footer>
+</body>
+</html>
