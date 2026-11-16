@@ -541,6 +541,198 @@
         </aside>
       </div>
     </section>
+
+    <section class="section reveal" id="evaluation">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Scope &amp; Evaluation Plan</span>
+          <h2>Project Boundaries &amp; Baseline Benchmarks</h2>
+          <p class="section__lead">
+            OpenGP targets high-throughput, fault-tolerant batch inference and evaluates each hypothesis against established distributed serving baselines.
+          </p>
+        </header>
+
+        <div class="grid grid--2">
+          <article class="card card--in-scope">
+            <p class="card__meta">In Scope</p>
+            <h3 class="card__title">Core Capabilities</h3>
+            <ul class="card__list">
+              <li>Non-interactive batch LLM inference workloads</li>
+              <li>Bounded-VRAM query-aware KV cache streaming</li>
+              <li>Error-coded crash recovery via Reed-Solomon shards</li>
+              <li>Heterogeneous volunteer devices and variable networks</li>
+              <li>Kademlia Decentralized Hash Table (DHT) coordination</li>
+            </ul>
+          </article>
+
+          <article class="card card--out-scope">
+            <p class="card__meta">Out of Scope</p>
+            <h3 class="card__title">Explicit Exclusions</h3>
+            <ul class="card__list">
+              <li>Real-time interactive chat serving</li>
+              <li>Model fine-tuning or altering model configurations</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="table-wrap mt-6">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Hypothesis</th>
+                <th scope="col">Independent Variable</th>
+                <th scope="col">Dependent Variable</th>
+                <th scope="col">Baseline System(s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>H1 · Recovery Latency</strong></td>
+                <td>Churn under context (node crash mid-inference)</td>
+                <td>Time to Resume</td>
+                <td>Petals (client-based fault tolerance)</td>
+              </tr>
+              <tr>
+                <td><strong>H2 · Context Capacity</strong></td>
+                <td>Input context length / number of input tokens</td>
+                <td>Maximum context length processed</td>
+                <td>FlexGen</td>
+              </tr>
+              <tr>
+                <td><strong>H3 · Throughput Under Churn</strong></td>
+                <td>System runtime under churn (0%, 10%, 20% node dropouts)</td>
+                <td>Aggregated throughput (tokens/sec)</td>
+                <td>Petals, DeServe</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="timeline">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Project Schedule</span>
+          <h2>Development Phases &amp; Milestones (Apr 2026 – May 2027)</h2>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline__item">
+            <p class="timeline__date">Apr – Aug 2026</p>
+            <p class="timeline__title">Background Study, Literature Review, Problem Formulation &amp; Methodology Refinement</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">10 Sep 2026</p>
+            <p class="timeline__title">Milestone: Proposal Evaluation</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">Sep 2026 – Jan 2027</p>
+            <p class="timeline__title">Design &amp; Implementation: P2P Architecture, Fault-Tolerance &amp; Churn Handling, Fair Scheduling, Module Integration</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">Dec 2026</p>
+            <p class="timeline__title">Milestone: Survey Paper</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">Jan – Feb 2027</p>
+            <p class="timeline__title">Testing, Functional Validation, Performance Evaluation &amp; Comparative Benchmarking</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">Mar 2027</p>
+            <p class="timeline__title">Milestones: FYP Showcase &amp; Poster Presentations</p>
+          </li>
+          <li class="timeline__item">
+            <p class="timeline__date">Apr – May 2027</p>
+            <p class="timeline__title">Final Report Compilation, Draft Submission &amp; Final Evaluation</p>
+          </li>
+        </ol>
+
+        <aside class="callout" aria-label="Conclusion">
+          <p class="callout__label">Conclusion</p>
+          <p class="callout__text">
+            By combining pipeline parallelism across volunteer GPUs with Reed-Solomon error-coded activation caching and query-aware KV streaming, OpenGP aims to improve batch inference throughput, reliability, and resource utilization under dynamic volunteer churn.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section reveal" id="team">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Team OpenGP</span>
+          <h2>Research Team &amp; Supervisor</h2>
+          <p class="section__lead">
+            Supervised by <strong>Dr. Adeesha Wijayasiri</strong>.
+          </p>
+        </header>
+
+        <div class="grid grid--4">
+          <article class="card">
+            <p class="card__meta">Member</p>
+            <h3 class="card__title">Pratheep S.</h3>
+            <div class="member-links">
+              <a href="https://www.linkedin.com/in/pratheep-srikones" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/Pratheep-Srikones" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">Member</p>
+            <h3 class="card__title">Sirithar R.</h3>
+            <div class="member-links">
+              <a href="https://www.linkedin.com/in/TODO-sirithar" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/TODO-sirithar" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">Member</p>
+            <h3 class="card__title">Suriya G.</h3>
+            <div class="member-links">
+              <a href="https://www.linkedin.com/in/suriyasg" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/suriyasg" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">Member</p>
+            <h3 class="card__title">Vithurshan S.</h3>
+            <div class="member-links">
+              <a href="https://www.linkedin.com/in/vithurshan-sivanathan-60b205241" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/VithurshanS" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="references">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Bibliography</span>
+          <h2>References</h2>
+        </header>
+
+        <ol class="ref-list">
+          <li>D. Anderson, J. Cobb, E. Korpela, M. Lebofsky, and D. Werthimer, "SETI@home: An experiment in public-resource computing," <em>Commun. ACM</em>, vol. 45, pp. 56–61, 2002.</li>
+          <li>D. P. Anderson, "BOINC: A platform for volunteer computing," <em>Journal of Grid Computing</em>, vol. 18, no. 1, pp. 99–122, 2020.</li>
+          <li>Y. Jiang, R. Yan, X. Yao, Y. Zhou, B. Chen, and B. Yuan, "HexGen: Generative inference of large language model over heterogeneous environment," <em>arXiv preprint arXiv:2311.11514</em>, 2023.</li>
+          <li>Y. Zhong et al., "DistServe: Disaggregating prefill and decoding for goodput-optimized large language model serving," in <em>18th USENIX Symposium on Operating Systems Design and Implementation (OSDI '24)</em>, 2024, pp. 193–210.</li>
+          <li>Y. Jiang, R. Yan, and B. Yuan, "HexGen-2: Disaggregated generative inference of LLMs in heterogeneous environment," in <em>ICLR</em>, 2025, pp. 3985–4002.</li>
+          <li>L. Wu, X. Liu, T. Shi, Z. Ye, and D. Song, "DeServe: Towards affordable offline LLM inference via decentralization," <em>arXiv preprint arXiv:2501.14784</em>, 2025.</li>
+          <li>K. Zhang, H. He, S. Song, J. Zhang, and K. B. Letaief, "Distributed on-device LLM inference with over-the-air computation," <em>arXiv preprint arXiv:2502.12559</em>, 2025.</li>
+          <li>N. Gopal and K. Kaffes, "Harvest: Opportunistic peer-to-peer GPU caching for LLM inference," <em>arXiv preprint arXiv:2602.00328</em>, 2026.</li>
+          <li>A. Borzunov et al., "Distributed inference and fine-tuning of large language models over the internet," in <em>Advances in Neural Information Processing Systems (NeurIPS)</em>, 2023.</li>
+          <li>C. Tong et al., "Parallax: Efficient LLM inference service over decentralized environment," <em>arXiv preprint arXiv:2509.26182</em>, 2025.</li>
+          <li>X. Miao et al., "SpotServe: Serving generative large language models on preemptible instances," in <em>Proc. 29th ACM ASPLOS</em>, vol. 2, 2024, pp. 1112–1127.</li>
+          <li>Y. Sheng et al., "FlexGen: High-throughput generative inference of large language models with a single GPU," in <em>ICML</em>, PMLR, 2023, pp. 31094–31116.</li>
+          <li>W. Kwon et al., "Efficient memory management for large language model serving with PagedAttention," in <em>Proc. 29th ACM SOSP</em>, 2023.</li>
+          <li>S. B. Wicker and V. K. Bhargava, <em>Reed-Solomon Codes and Their Applications</em>. John Wiley &amp; Sons, 1999.</li>
+          <li>T. Dao, D. Fu, S. Ermon, A. Rudra, and C. Ré, "FlashAttention: Fast and memory-efficient exact attention with IO-awareness," in <em>NeurIPS</em>, vol. 35, 2022, pp. 16344–16359.</li>
+        </ol>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
