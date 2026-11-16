@@ -127,6 +127,165 @@
         </aside>
       </div>
     </section>
+
+    <section class="section reveal" id="related-work">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Literature Review &amp; Research Gap</span>
+          <h2>Existing Distributed LLM Systems Leave a Clear Gap</h2>
+          <p class="section__lead">
+            Prior work addresses scheduling, memory offloading, or interactive fault tolerance in isolation, but none combines consumer GPU support, batch execution, bounded VRAM, and decentralized in-flight recovery.
+          </p>
+        </header>
+
+        <div class="grid grid--3">
+          <article class="card">
+            <p class="card__meta">Scheduling &amp; Allocation</p>
+            <h3 class="card__title">Parallax, HexGen, SpotServe</h3>
+            <ul class="card__list">
+              <li><strong>Parallax:</strong> Two-phase scheduling (DP + water-filling) on consumer devices; 3.6× throughput, 3.2× lower latency, but no fault tolerance.</li>
+              <li><strong>HexGen:</strong> Asymmetric partitioning for datacenter GPUs; 2.3× lower latency, 4× request rate, datacenter-only and no fault tolerance.</li>
+              <li><strong>SpotServe:</strong> Dynamic reparallelization on cloud spot instances; 2.4× lower latency, requires cloud grace period.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">Fault Tolerance (Closest: Petals)</p>
+            <h3 class="card__title">Client-Bound Recovery</h3>
+            <ul class="card__list">
+              <li><strong>Petals:</strong> Client caches hidden activations and re-routes to a replacement server for full KV re-prefill; recovery speed is bottlenecked by client bandwidth.</li>
+              <li><strong>Parallax, MeshLLM, DeServe:</strong> No in-flight fault handling—node dropout causes total job loss.</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">Memory &amp; KV Management</p>
+            <h3 class="card__title">FlexGen, Prima.cpp, DeServe</h3>
+            <ul class="card__list">
+              <li><strong>FlexGen:</strong> VRAM → CPU RAM → Disk offloading; OPT-175B-INT4 on 16 GB VRAM at 1 tok/s, single node only.</li>
+              <li><strong>Prima.cpp:</strong> Ring parallelism on 4 consumer devices (Llama-70B-Q4K at 674 ms/tok), high TTFT, no fault tolerance.</li>
+              <li><strong>DeServe:</strong> PCIe full-duplex KV offloading/onloading; 12.6× throughput, single pipeline per client, no fault tolerance.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="table-wrap" style="margin-top: var(--space-6);">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">System</th>
+                <th scope="col">Consumer Devices</th>
+                <th scope="col">Distributed</th>
+                <th scope="col">In-Flight Fault Tolerance</th>
+                <th scope="col">Low VRAM Pressure</th>
+                <th scope="col">Batch Workload</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>HexGen / DistServe / HexGen-2</td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>SpotServe</td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-partial">Partial</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td>Petals</td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+              </tr>
+              <tr>
+                <td>DeServe / BloomBee</td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+              </tr>
+              <tr>
+                <td>Parallax / Prima.cpp / MeshLLM</td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+              </tr>
+              <tr>
+                <td>Harvest</td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td><span class="badge-fail">No</span></td>
+              </tr>
+              <tr>
+                <td>FlexGen</td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-fail">No</span></td>
+                <td>N/A</td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+              </tr>
+              <tr class="is-highlighted">
+                <td><strong>OpenGP (Proposed)</strong></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+                <td><span class="badge-pass">Yes</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="objectives">
+      <div class="container">
+        <header class="section__header">
+          <span class="section__eyebrow">Objectives &amp; Hypotheses</span>
+          <h2>Research Goals &amp; Quantitative Experimental Design</h2>
+          <p class="section__lead">
+            Domain: Distributed/Decentralized Systems for ML inference serving · Nature: Problem-Solving &amp; Development · Approach: Quantitative Experimental.
+          </p>
+        </header>
+
+        <div class="grid grid--2">
+          <article class="card">
+            <p class="card__meta">Project Objectives</p>
+            <h3 class="card__title">Four Core Deliverables</h3>
+            <ol class="card__list">
+              <li>Design and develop a peer-to-peer volunteer computing system for distributed LLM batch inference.</li>
+              <li>Develop an error-code-based fault-tolerance mechanism to handle node churn during inference.</li>
+              <li>Integrate KV-cache offloading strategies to reduce GPU VRAM load.</li>
+              <li>Evaluate the developed system and mechanisms against established baselines.</li>
+            </ol>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">Formal Hypotheses</p>
+            <h3 class="card__title">Testable Claims</h3>
+            <ul class="card__list">
+              <li><strong>H1 (Recovery Latency):</strong> Decentralized activation-based fault tolerance reduces recovery time compared with Petals' client-based mechanism.</li>
+              <li><strong>H2 (Context Capacity):</strong> Query-aware bounded-KV cache streaming enables larger batch contexts within fixed physical VRAM without quantization loss or OOM crashes.</li>
+              <li><strong>H3 (Throughput Resilience):</strong> The combined system sustains higher aggregate batch throughput under simulated volunteer churn than reactive-reroute or fail-closed baselines.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
