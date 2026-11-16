@@ -299,51 +299,52 @@
 
         <figure class="figure">
           <div class="diagram-box">
-            <svg class="diagram-svg" viewBox="0 0 820 340" role="img" aria-label="OpenGP System Overview connecting Users, Gateway Node, Active Compute Network, Kademlia DHT, and Passive Network">
+            <svg class="diagram-svg" viewBox="0 0 840 340" role="img" aria-label="OpenGP System Overview connecting Users, Gateway Node, Active Compute Network, Kademlia DHT, and Passive Network">
               <defs>
                 <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M0 1L10 5L0 9Z" fill="#5ea0ff"></path>
                 </marker>
               </defs>
-              <rect x="24" y="56" width="130" height="84" rx="10" fill="#0d1f66" stroke="#2a3b8f" stroke-width="1.5"></rect>
-              <text x="89" y="92" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Users</text>
-              <text x="89" y="114" text-anchor="middle" fill="#c9d3f5" font-size="12">Batch Requests</text>
+              <rect x="20" y="56" width="124" height="84" rx="10" fill="#0d1f66" stroke="#2a3b8f" stroke-width="1.5"></rect>
+              <text x="82" y="92" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Users</text>
+              <text x="82" y="114" text-anchor="middle" fill="#c9d3f5" font-size="12">Batch Requests</text>
 
-              <rect x="210" y="56" width="180" height="84" rx="10" fill="#0d1f66" stroke="#5ea0ff" stroke-width="1.5"></rect>
-              <text x="300" y="90" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Gateway Node</text>
-              <text x="300" y="112" text-anchor="middle" fill="#c9d3f5" font-size="11.5">Pipeline selection &amp; task registry</text>
+              <rect x="184" y="56" width="212" height="84" rx="10" fill="#0d1f66" stroke="#5ea0ff" stroke-width="1.5"></rect>
+              <text x="290" y="88" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">Gateway Node</text>
+              <text x="290" y="110" text-anchor="middle" fill="#c9d3f5" font-size="11.5">Pipeline selection &amp;</text>
+              <text x="290" y="126" text-anchor="middle" fill="#c9d3f5" font-size="11.5">task registry</text>
 
-              <rect x="460" y="34" width="330" height="128" rx="12" fill="#07154f" stroke="#5ea0ff" stroke-width="2"></rect>
-              <text x="625" y="66" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Active Compute Network</text>
-              <text x="625" y="92" text-anchor="middle" fill="#c9d3f5" font-size="12">Pipeline-parallel forward inference</text>
-              <text x="625" y="114" text-anchor="middle" fill="#9eb0e6" font-size="12">Volunteer GPU peers (A1 → A2 → A3 → A4)</text>
+              <rect x="480" y="34" width="336" height="128" rx="12" fill="#07154f" stroke="#5ea0ff" stroke-width="2"></rect>
+              <text x="648" y="66" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Active Compute Network</text>
+              <text x="648" y="92" text-anchor="middle" fill="#c9d3f5" font-size="12">Pipeline-parallel forward inference</text>
+              <text x="648" y="114" text-anchor="middle" fill="#9eb0e6" font-size="12">Volunteer GPU peers (A1 → A2 → A3 → A4)</text>
 
-              <rect x="210" y="206" width="210" height="106" rx="10" fill="#07154f" stroke="#2a3b8f" stroke-width="1.5"></rect>
-              <text x="315" y="232" text-anchor="middle" fill="#5ea0ff" font-size="14" font-weight="700">Kademlia DHT</text>
-              <text x="315" y="256" text-anchor="middle" fill="#c9d3f5" font-size="11.5">NS1: Layer placement &amp; node liveness</text>
-              <text x="315" y="278" text-anchor="middle" fill="#c9d3f5" font-size="11.5">NS2: Shared shard index &amp; context store</text>
+              <rect x="174" y="206" width="250" height="108" rx="10" fill="#07154f" stroke="#2a3b8f" stroke-width="1.5"></rect>
+              <text x="299" y="232" text-anchor="middle" fill="#5ea0ff" font-size="14" font-weight="700">Kademlia DHT</text>
+              <text x="299" y="256" text-anchor="middle" fill="#c9d3f5" font-size="11">NS1: Layer placement &amp; liveness</text>
+              <text x="299" y="278" text-anchor="middle" fill="#c9d3f5" font-size="11">NS2: Shared shard index &amp; context</text>
 
-              <rect x="460" y="206" width="330" height="106" rx="12" fill="#07154f" stroke="#4ade80" stroke-width="1.5"></rect>
-              <text x="625" y="234" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Passive Storage Network</text>
-              <text x="625" y="258" text-anchor="middle" fill="#c9d3f5" font-size="12">Erasure-coded terminal activation shards</text>
-              <text x="625" y="280" text-anchor="middle" fill="#9eb0e6" font-size="12">RAM / SSD volunteers (no GPU required)</text>
+              <rect x="480" y="206" width="336" height="108" rx="12" fill="#07154f" stroke="#4ade80" stroke-width="1.5"></rect>
+              <text x="648" y="234" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">Passive Storage Network</text>
+              <text x="648" y="258" text-anchor="middle" fill="#c9d3f5" font-size="12">Erasure-coded terminal activation shards</text>
+              <text x="648" y="280" text-anchor="middle" fill="#9eb0e6" font-size="12">RAM / SSD volunteers (no GPU required)</text>
 
-              <line x1="154" y1="98" x2="206" y2="98" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-blue)"></line>
-              <line x1="390" y1="84" x2="456" y2="84" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-blue)"></line>
-              <line x1="460" y1="114" x2="394" y2="114" stroke="#5ea0ff" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-blue)"></line>
-              <text x="425" y="76" text-anchor="middle" fill="#9eb0e6" font-size="11">Job</text>
-              <text x="425" y="130" text-anchor="middle" fill="#9eb0e6" font-size="11">Response</text>
+              <line x1="144" y1="98" x2="180" y2="98" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-blue)"></line>
+              <line x1="396" y1="84" x2="476" y2="84" stroke="#5ea0ff" stroke-width="2" marker-end="url(#arrow-blue)"></line>
+              <line x1="480" y1="114" x2="400" y2="114" stroke="#5ea0ff" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-blue)"></line>
+              <text x="438" y="75" text-anchor="middle" fill="#9eb0e6" font-size="11">Job</text>
+              <text x="438" y="131" text-anchor="middle" fill="#9eb0e6" font-size="11">Response</text>
 
-              <path d="M510 162 L510 184 L380 184 L380 202" fill="none" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></path>
-              <text x="445" y="178" text-anchor="middle" fill="#9eb0e6" font-size="10.5">heartbeat / lookup</text>
+              <path d="M530 162 L530 184 L384 184 L384 202" fill="none" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></path>
+              <text x="458" y="178" text-anchor="middle" fill="#9eb0e6" font-size="10.5">heartbeat / lookup</text>
 
-              <line x1="590" y1="162" x2="590" y2="202" stroke="#5ea0ff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-blue)"></line>
-              <line x1="680" y1="206" x2="680" y2="166" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></line>
-              <text x="580" y="188" text-anchor="end" fill="#9eb0e6" font-size="10.5">checkpoint</text>
-              <text x="690" y="188" text-anchor="start" fill="#9eb0e6" font-size="10.5">recovery</text>
+              <line x1="612" y1="162" x2="612" y2="202" stroke="#5ea0ff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-blue)"></line>
+              <line x1="704" y1="206" x2="704" y2="166" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></line>
+              <text x="602" y="188" text-anchor="end" fill="#9eb0e6" font-size="10.5">checkpoint</text>
+              <text x="714" y="188" text-anchor="start" fill="#9eb0e6" font-size="10.5">recovery</text>
 
-              <line x1="460" y1="258" x2="424" y2="258" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></line>
-              <text x="442" y="248" text-anchor="middle" fill="#9eb0e6" font-size="10">index</text>
+              <line x1="480" y1="258" x2="428" y2="258" stroke="#5ea0ff" stroke-width="1.5" marker-end="url(#arrow-blue)"></line>
+              <text x="454" y="248" text-anchor="middle" fill="#9eb0e6" font-size="10">index</text>
             </svg>
           </div>
           <figcaption class="figure__caption">
@@ -505,7 +506,7 @@
               <line x1="420" y1="210" x2="720" y2="210" stroke="#2a3b8f" stroke-width="1.5"></line>
               <line x1="420" y1="45" x2="420" y2="210" stroke="#2a3b8f" stroke-width="1.5"></line>
               <line x1="420" y1="142" x2="720" y2="142" stroke="#f87171" stroke-width="1" stroke-dasharray="4 4"></line>
-              <text x="720" y="136" text-anchor="end" fill="#f87171" font-size="10">10 tok/s (100 ms/tok)</text>
+              <text x="720" y="54" text-anchor="end" fill="#f87171" font-size="10.5">--- 10 tok/s (100 ms/tok)</text>
 
               <rect x="440" y="74" width="32" height="136" rx="4" fill="#4ade80"></rect>
               <text x="456" y="66" text-anchor="middle" fill="#c9d3f5" font-size="11">~20</text>
