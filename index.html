@@ -1,10 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OpenGP — Peer-to-Peer Volunteer Computing for Distributed LLM Inference</title>
-  <meta name="description" content="Final-year project proposal showcase by Team OpenGP: fault-tolerant, memory-bounded distributed LLM batch inference across volunteer consumer GPUs.">
+  <meta name="description" content="Final-year project proposal by Team OpenGP: fault-tolerant, memory-bounded distributed LLM batch inference across heterogeneous volunteer consumer GPUs.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="OpenGP — Distributed LLM Inference on Volunteer GPUs">
+  <meta property="og:description" content="Peer-to-peer volunteer computing system with Reed-Solomon crash recovery and query-aware KV cache streaming for batch LLM inference.">
+  <meta property="og:image" content="assets/img/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/components.css">
@@ -22,130 +28,103 @@
         Menu
       </button>
       <ul class="nav-links" id="primary-nav">
-        <li><a class="is-active" href="#hero">Overview</a></li>
-        <li><a href="#components">Components</a></li>
-        <li><a href="#table-demo">Matrix</a></li>
-        <li><a href="#timeline-demo">Timeline</a></li>
+        <li><a class="is-active" href="#motivation">Motivation</a></li>
+        <li><a href="#related-work">Related Work</a></li>
+        <li><a href="#objectives">Objectives</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#experiment">Experiment</a></li>
+        <li><a href="#evaluation">Evaluation</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#references">References</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="main">
     <section class="section section--hero" id="hero">
-      <svg class="hero__motif" viewBox="0 0 320 240" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <circle cx="50" cy="60" r="8" fill="currentColor"></circle>
-        <circle cx="160" cy="36" r="8" fill="currentColor"></circle>
-        <circle cx="260" cy="84" r="8" fill="currentColor"></circle>
-        <circle cx="110" cy="156" r="8" fill="currentColor"></circle>
-        <circle cx="220" cy="190" r="8" fill="currentColor"></circle>
-        <path d="M50 60L160 36L260 84L220 190L110 156Z"></path>
-        <path d="M160 36L110 156M260 84L110 156"></path>
+      <svg class="hero__motif" viewBox="0 0 360 260" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="56" cy="64" r="8" fill="currentColor"></circle>
+        <circle cx="176" cy="36" r="8" fill="currentColor"></circle>
+        <circle cx="296" cy="88" r="8" fill="currentColor"></circle>
+        <circle cx="122" cy="176" r="8" fill="currentColor"></circle>
+        <circle cx="248" cy="212" r="8" fill="currentColor"></circle>
+        <circle cx="324" cy="184" r="6" fill="currentColor"></circle>
+        <path d="M56 64L176 36L296 88L248 212L122 176Z"></path>
+        <path d="M176 36L122 176M296 88L122 176M296 88L324 184L248 212"></path>
       </svg>
       <div class="container hero__content">
-        <span class="section__eyebrow">Team OpenGP · Design System Skeleton</span>
+        <span class="section__eyebrow">Team OpenGP · Final Year Project Proposal</span>
         <h1>Peer-to-Peer Volunteer Computing System for Distributed LLM Inference</h1>
         <p class="section__lead">
-          Design system kitchen-sink skeleton verifying Option A tokens (deep navy, white typography, and bright blue accent) across all UI primitives.
+          Enabling organizations to run non-interactive batch LLM inference across heterogeneous volunteer GPUs without out-of-memory crashes or losing progress when nodes disconnect.
         </p>
         <div class="btn-row">
-          <a class="btn btn--primary" href="#components">Explore Components</a>
-          <a class="btn btn--ghost" href="#table-demo">View Matrix</a>
+          <a class="btn btn--primary" href="#architecture">Explore Architecture</a>
+          <a class="btn btn--ghost" href="#experiment">View Preliminary Results</a>
         </div>
-        <ul class="chip-list" aria-label="Key pillars">
-          <li class="chip">Batch Inference</li>
-          <li class="chip">Reed-Solomon Fault Tolerance</li>
-          <li class="chip">KV Cache Streaming</li>
+        <ul class="chip-list" aria-label="Core capabilities">
+          <li class="chip">Batch LLM Inference</li>
+          <li class="chip">Reed-Solomon (N, K) Recovery</li>
+          <li class="chip">Query-Aware KV Streaming</li>
           <li class="chip">Kademlia DHT</li>
+          <li class="chip">Supervisor: Dr. Adeesha Wijayasiri</li>
         </ul>
       </div>
     </section>
 
-    <section class="section" id="components">
+    <section class="section reveal" id="motivation">
       <div class="container">
         <header class="section__header">
-          <span class="section__eyebrow">Primitives</span>
-          <h2>Cards &amp; Callouts</h2>
-          <p class="section__lead">Responsive grid cards and highlighted problem-statement callout.</p>
+          <span class="section__eyebrow">Background &amp; Motivation</span>
+          <h2>Why Volunteer Consumer GPUs Need a New Inference Architecture</h2>
+          <p class="section__lead">
+            High GPU infrastructure costs limit AI access outside well-resourced institutions, even while gaming GPUs and workstations sit idle. Pooling them for LLM inference introduces two coupled bottlenecks: tight VRAM limits and unpredictable node churn.
+          </p>
         </header>
 
-        <div class="grid grid--3">
+        <div class="grid grid--2">
           <article class="card">
-            <p class="card__meta">01 · Compute</p>
-            <h3 class="card__title">Active Compute Network</h3>
-            <p>Volunteer GPUs execute sequential pipeline stages and stream activations to adjacent peers.</p>
+            <p class="card__meta">01 · Stateful Two-Phase Execution</p>
+            <h3 class="card__title">Prefill vs. Decode</h3>
+            <ul class="card__list">
+              <li><strong>Prefill:</strong> Processes all input tokens in parallel; compute-intensive; initializes the Key-Value (KV) cache; measured by Time to First Token (TTFT).</li>
+              <li><strong>Decode:</strong> Generates tokens autoregressively one by one; memory-bandwidth intensive; KV cache grows per token in every layer; measured by Time per Output Token (TPOT).</li>
+            </ul>
           </article>
+
           <article class="card">
-            <p class="card__meta">02 · Resilience</p>
-            <h3 class="card__title">Passive Storage Swarm</h3>
-            <p>Non-GPU peers store Reed-Solomon erasure-coded activation shards indexed via Kademlia DHT.</p>
+            <p class="card__meta">02 · Memory Bottleneck</p>
+            <h3 class="card__title">Weights &amp; Growing KV Cache</h3>
+            <ul class="card__list">
+              <li><strong>Model weights:</strong> Llama 3.3 70B requires 140 GB in FP16 (40 GB in Q4_K_M); Llama 4 Scout 109B MoE requires ~218 GB in FP16 (~55 GB in Q4_K_M).</li>
+              <li><strong>KV cache growth:</strong> On Llama 3.1/3.3 70B (16-bit), KV cache reaches 10 GiB at 32K context and 40 GiB at 128K context—exceeding 24 GB consumer GPUs.</li>
+            </ul>
           </article>
+
           <article class="card">
-            <p class="card__meta">03 · Memory</p>
-            <h3 class="card__title">KV Cache Streaming</h3>
-            <p>Full KV cache resides in CPU RAM; fast GPU summary filtering streams only top 5–10% to VRAM.</p>
+            <p class="card__meta">03 · Distribution Strategy</p>
+            <h3 class="card__title">Model Pipeline Parallelism</h3>
+            <p>
+              Model layers are partitioned into sequential stages assigned across nodes. Adjacent nodes exchange only intermediate activations, allowing models larger than any single GPU to execute across consumer devices.
+            </p>
+          </article>
+
+          <article class="card">
+            <p class="card__meta">04 · Volunteer Computing Reality</p>
+            <h3 class="card__title">Heterogeneous &amp; Dynamic Peers</h3>
+            <p>
+              Unlike CPU volunteer projects (GIMPS, BOINC-SETI@home), volunteer GPU networks combine diverse VRAM capacities, hardware, and network speeds—and peers can join or leave unexpectedly mid-job.
+            </p>
           </article>
         </div>
 
-        <aside class="callout" aria-label="Highlighted statement">
+        <aside class="callout" aria-label="Problem Statement">
           <p class="callout__label">Problem Statement</p>
           <p class="callout__text">
-            How to enable organizations to run LLM inference across volunteers' personal devices without crashing from limited memory or losing progress when volunteers unexpectedly disconnect?
+            How to enable organizations to run LLM inference across volunteers' personal devices without the system crashing from limited memory or losing expensive progress when volunteers unexpectedly disconnect?
           </p>
         </aside>
-      </div>
-    </section>
-
-    <section class="section" id="table-demo">
-      <div class="container">
-        <header class="section__header">
-          <span class="section__eyebrow">Comparison</span>
-          <h2>Data Table</h2>
-        </header>
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th scope="col">System</th>
-                <th scope="col">Consumer Support</th>
-                <th scope="col">Fault Tolerance</th>
-                <th scope="col">Low VRAM Pressure</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Petals</td>
-                <td><span class="badge-pass">Yes</span></td>
-                <td><span class="badge-partial">Client-bound</span></td>
-                <td><span class="badge-fail">No</span></td>
-              </tr>
-              <tr class="is-highlighted">
-                <td><strong>OpenGP (Ours)</strong></td>
-                <td><span class="badge-pass">Yes</span></td>
-                <td><span class="badge-pass">Yes</span></td>
-                <td><span class="badge-pass">Yes</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="timeline-demo">
-      <div class="container">
-        <header class="section__header">
-          <span class="section__eyebrow">Schedule</span>
-          <h2>Timeline &amp; Milestones</h2>
-        </header>
-        <ol class="timeline">
-          <li class="timeline__item">
-            <p class="timeline__date">Apr – Aug 2026</p>
-            <p class="timeline__title">Background, Literature Review &amp; Problem Formulation</p>
-          </li>
-          <li class="timeline__item">
-            <p class="timeline__date">10 Sep 2026</p>
-            <p class="timeline__title">Proposal Evaluation Milestone</p>
-          </li>
-        </ol>
       </div>
     </section>
   </main>
@@ -156,5 +135,6 @@
       <p>Peer-to-Peer Volunteer Computing System for Distributed LLM Inference</p>
     </div>
   </footer>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
